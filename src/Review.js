@@ -6,15 +6,25 @@ const Review = () => {
   const [index, setIndex] = useState(0);
   const { name, job, image, text } = people[index];
 
+  const checkNumber = (number) => {
+    if (number > people.length - 1) {
+      return 0;
+    }
+    if (number < 0) {
+      return people.length - 1;
+    }
+    return number;
+  };
+  
   const nextPerson = () => {
     setIndex((index) => {
-      return ++index;
+      return checkNumber(++index);
     });
   };
 
   const prevPerson = () => {
     setIndex((index) => {
-      return --index;
+      return checkNumber(--index);
     });
   };
 
