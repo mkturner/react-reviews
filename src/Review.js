@@ -7,9 +7,12 @@ const Review = () => {
   const { name, job, image, text } = people[index];
 
   const checkNumber = (number) => {
+    // check for overflow
+    // if greater than upper bound, wrap to first position
     if (number > people.length - 1) {
       return 0;
     }
+    // if lesser than lower bound, wrap to last position
     if (number < 0) {
       return people.length - 1;
     }
@@ -18,15 +21,28 @@ const Review = () => {
   
   const nextPerson = () => {
     setIndex((index) => {
+      // prefix addition shorthand for +1
+      // check for overflow
       return checkNumber(++index);
     });
   };
 
   const prevPerson = () => {
     setIndex((index) => {
+      // prefix subtraction shorthand for -1
+      // check for overflow
       return checkNumber(--index);
     });
   };
+
+  const randPerson = () => {
+    // generate random number with range of array length
+    // then truncate the result
+    const randomIndex = Math.floor(Math.random() * people.length);
+    // Make sure index is not set to same value it currently has
+    randomIndex === index ? nextPerson() : setIndex(randomIndex);
+  };
+  
 
   return (
     <article className='review'>
@@ -47,7 +63,9 @@ const Review = () => {
           <FaChevronRight />
         </button>
       </div>
-      <button className='random-btn'>Surprise Me!</button>
+      <button className='random-btn' onClick={randPerson}>
+        Surprise Me!
+      </button>
     </article>
   );
 };
